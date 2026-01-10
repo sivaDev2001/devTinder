@@ -22,20 +22,35 @@ const app = express()
 // app.use((err,req,res,next)=>{
 //     res.send(err.message)
 // })
-app.use((req,res,next)=>{
-    console.log('first middleware')
-    next()
+
+
+// app.use((req,res,next)=>{
+//     console.log('first middleware')
+//     next()
+// })
+// app.use((req,res,next)=>{
+//     console.log('second middleware')
+//     next(new Error('there was an error'))
+// })
+// app.use((req,res,next)=>{
+//     console.log('third middleware')
+//     next()
+// })
+// app.use((err,req,res,next)=>{
+//     console.log('fourth middleware')
+//     res.send(err.message)
+// })
+
+
+//handling errors
+
+app.get('/getdata',(req,res)=>{
+    throw new Error('hello') //when we throw error immediatly it jumbs to the error handling middleware
+    res.send('user data') 
 })
-app.use((req,res,next)=>{
-    console.log('second middleware')
-    next(new Error('there was an error'))
-})
-app.use((req,res,next)=>{
-    console.log('third middleware')
-    next()
-})
-app.use((err,req,res,next)=>{
-    console.log('fourth middleware')
+
+app.use((err,req,res,next)=>{ //this is error handling middleware it will always have 4 parameters
+    console.log(err)
     res.send(err.message)
 })
 
